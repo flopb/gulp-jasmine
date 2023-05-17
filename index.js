@@ -86,18 +86,27 @@ module.exports = (options = {}) => {
 				}
 			}
 
-			jasmine.onComplete(passed => {
-				if (errorOnFail && !passed) {
-					callback(new PluginError('gulp-jasmine', 'Tests failed', {
-						showStack: false
-					}));
-				} else {
-					self.emit('jasmineDone', passed);
-					callback();
-				}
-			});
-
-			jasmine.execute();
+// 			jasmine.onComplete(passed => {
+// 				if (errorOnFail && !passed) {
+// 					callback(new PluginError('gulp-jasmine', 'Tests failed', {
+// 						showStack: false
+// 					}));
+// 				} else {
+// 					self.emit('jasmineDone', passed);
+// 					callback();
+// 				}
+// 			});
+			jasmine.exitOnCompletion=false
+			
+			jasmine.execute().then((passed) => {
+// 				if (errorOnFail && !passed) {
+// 					callback(new PluginError('gulp-jasmine', 'Tests failed', {
+// 						showStack: false
+// 					}));
+// 				} else {
+// 					self.emit('jasmineDone', passed);
+// 					callback();
+// 				});
 		} catch (error) {
 			callback(new PluginError('gulp-jasmine', error, {showStack: true}));
 		}
