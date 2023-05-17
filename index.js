@@ -24,7 +24,6 @@ function deleteRequireCache(id) {
 
 module.exports = (options = {}) => {
 	const jasmine = new Jasmine();
-
 	if (options.timeout) {
 		jasmine.jasmine.DEFAULT_TIMEOUT_INTERVAL = options.timeout;
 	}
@@ -85,7 +84,7 @@ module.exports = (options = {}) => {
 					deleteRequireCache(modId);
 				}
 			}
-
+			jasmine.exitOnCompletion = false
 			jasmine.execute().then((passed) => {
 				if (errorOnFail && !passed) {
 					callback(new PluginError('gulp-jasmine', 'Tests failed', {
@@ -94,7 +93,11 @@ module.exports = (options = {}) => {
 				} else {
 					self.emit('jasmineDone', passed);
 					callback();
-				}});
+				}
+
+
+			});
+
 		} catch (error) {
 			callback(new PluginError('gulp-jasmine', error, {showStack: true}));
 		}
